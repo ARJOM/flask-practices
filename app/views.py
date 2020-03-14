@@ -1,4 +1,4 @@
-from flask import render_template, g
+from flask import render_template, g, request, redirect, url_for
 
 import psycopg2.extras
 
@@ -35,3 +35,15 @@ def users():
     cur.close()
 
     return render_template('users.html', users=data)
+
+
+@app.route('/user/new', methods=['GET', 'POST'])
+def register_user():
+    if request.method == 'POST':
+        print(request.form['name'])
+        cur = g.db.cursor()
+        cur.execute(f"INSERT INTO users(name) VALUES('{request.form['name']}')")
+        g.db.commit()
+        cur.close()
+        return redirect(url_for('users'))
+    return render_template('form.html')
