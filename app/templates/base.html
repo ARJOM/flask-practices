@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>First page</title>
+    <title>Practice</title>
 </head>
 <body>
-    <h1>{{ title }}</h1>
-    <p>{{ paragraph }}</p>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
 </body>
 </html>

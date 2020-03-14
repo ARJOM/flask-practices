@@ -7,4 +7,4 @@ from app import app
 def index():
     title = "Olá Mundo"
     paragraph = "Este é o primeiro teste sem preconceito com flask"
-    return render_template('base.html', title=title, paragraph=paragraph)
+    return render_template('home.html', title=title, paragraph=paragraph)
