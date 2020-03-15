@@ -56,3 +56,16 @@ def detail_user(pk):
     user = cur.fetchone()
     cur.close()
     return render_template('detail.html', id=user[0], name=user[1])
+
+
+@app.route('/user/<int:pk>/edit', methods=['GET', 'POST'])
+def edit_user(pk):
+    cur = g.db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    if request.method == "POST":
+        cur.execute(f"UPDATE users SET name='{request.form['name']}' WHERE id={pk}")
+        g.db.commit()
+        cur.close()
+        return redirect(url_for('users'))
+    cur.execute(f"SELECT name FROM users WHERE id = {pk}")
+    name = cur.fetchone()['name']
+    return render_template('form.html', name=name)
