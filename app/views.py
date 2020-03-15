@@ -47,3 +47,12 @@ def register_user():
         cur.close()
         return redirect(url_for('users'))
     return render_template('form.html')
+
+
+@app.route('/user/<int:pk>', methods=['GET'])
+def detail_user(pk):
+    cur = g.db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute(f"SELECT * FROM users WHERE id = {pk}")
+    user = cur.fetchone()
+    cur.close()
+    return render_template('detail.html', id=user[0], name=user[1])
